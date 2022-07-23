@@ -2,10 +2,11 @@
 
 char **strbrk(char *str, const char delim)
 {
-	int i, j = 0;
-	short wc = 1, wordlen = 0;
+	int c, i, j = 0;
+	short wordlen = 0;
 	char **words;
 
+	wc = 1;
 	if (!str)
 	{
 		perror("Bad String Input");
@@ -18,26 +19,27 @@ char **strbrk(char *str, const char delim)
 			wc++;
 	}
 
-	words = malloc(sizeof(char *) * (wc + 1));
+	words = calloc((wc + 1), sizeof(char *));
 
 	for (i = 0; str[i]; i++, wordlen++)
 	{
 		if (str[i] == delim || str[i] == 10)
 		{
-			words[j] = malloc(wordlen * sizeof(char));
+			words[j] = calloc(++wordlen, sizeof(char));
 			wordlen = 0;
-			++i && ++j;
+			++i;
+			++j;
 		}
 	}
 
-	for (j = 0; j < wc; j++)
+	for (i = 0, j = 0; j < wc; j++, i++)
 	{
-		for (i = 0; *str && *str != delim; i++, str++)
+		for (c = 0; str[i] && str[i] != delim; c++, i++)
 		{
-			words[j][i] = *str;
+			words[j][c] = str[i];
 		}
-		str++;
 	}
+	free(str);
 
 	return (words);
 }
