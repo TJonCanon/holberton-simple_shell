@@ -3,13 +3,12 @@
 char **strbrk(char *str, const char delim)
 {
 	int c, i, j = 0;
-	short wordlen = 0;
+	short wc = 1, wordlen = 0;
 	char **words;
 
-	wc = 1;
 	if (!str)
 	{
-		perror("Bad String Input");
+		write(2, "Bad String Input\n", 17);
 		return (NULL);
 	}
 
@@ -23,7 +22,7 @@ char **strbrk(char *str, const char delim)
 
 	for (i = 0; str[i]; i++, wordlen++)
 	{
-		if (str[i] == delim || str[i] == 10)
+		if (str[i] == delim || !str[i + 1])
 		{
 			words[j] = calloc(++wordlen, sizeof(char));
 			wordlen = 0;

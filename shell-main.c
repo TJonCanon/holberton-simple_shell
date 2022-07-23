@@ -1,12 +1,11 @@
 #include "shell.h"
 
 void freestuff(char **split);
+char *lsh_read_line(void);
 
-extern short wc;
 int main(void)
 {
 	char *PS1 = "$ ";
-	size_t nchars = 1024, characters;
 	char *buf;
 	char **split;
 	int i;
@@ -14,19 +13,20 @@ int main(void)
 
 	while (live)
 	{
-		buf = calloc(1024, sizeof(char));
-
 		printf("%s", PS1);
-
-		characters = getline(&buf, &nchars, stdin);
-
+		/* readline goes here */
+		/* buf = calloc(1024, sizeof(char)); */
+		/* characters = getline(&buf, &nchars, stdin); */
+		buf = lsh_read_line();
+		/*and ends here*/
 		split = strbrk(buf, ' ');
 
-		for (i = 0; split[i]; i++)
+		for (i = 0; split && split[i]; i++)
 		{
 			if (split[i][0] == 'x')
 				live = false;
 			write(1, split[i], strlen(split[i]));
+			putchar(10);
 		}
 	}
 
@@ -34,7 +34,7 @@ int main(void)
 
 	freestuff(split);
 
-	return (characters);
+	return (0);
 }
 
 void freestuff(char **split)
