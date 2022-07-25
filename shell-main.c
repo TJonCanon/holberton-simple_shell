@@ -1,59 +1,64 @@
 #include "shell.h"
 
+void countwords(char *buf, int *wc);
+
 int main(int ac, char **av)
 {
 	char *PS1 = "$ ", *buf = NULL, **split = NULL;
 	pid_t cpid;
 	int status;
-	unsigned int wc = 0;
+	int wc = 0;
 	(void) ac;
 	(void) av;
 
-	do {
-		freestuff(split, &wc, buf);
-
+	while (1)
+	{
 		printf("%s", PS1);
 
 		dsh_read_line(&buf);
-		if (!buf)
-			break;
-		if (*buf == '\0')
-			continue;
+
+		countwords(buf, &wc);
 
 		split = strbrk(buf, ' ', &wc);
 
 		if (!split)
-			continue;
+			goto fail;
 		/* somehow we need to detect if a valid command is provided prior */
 		/* to actually forking here. */
 
 		cpid = fork();
 
-		if (cpid != 0)
+		if (cpid == 0)
 		{
-			wait(&status);
-			continue;
+			if (execve(split[0], split, NULL) == -1)
+				perror("Error");
+			exit(0);
 		}
-		buf = NULL;
-		if (execve(split[0], split, NULL) == -1)
-			perror("Error");
-	} while (buf);
+		wait(&status);
+fail:		freestuff(split, &wc, buf);
+	}
 	return (0);
 }
 
-void freestuff(char **split, unsigned int *wc, char *buf)
+void countwords(char *buf, int *wc)
 {
-	unsigned int i;
+	int i;
 
-	if (buf)
-		free(buf);
-
-	if (split)
+	if (!buf)
+		exit(0);
+	if (*buf == '\0')
 	{
-		for (i = 0; i < *wc; i++)
-		{
-			free(split[i]);
-		}
-		free(split);
+		*wc = 0;
+		return;
+	}
+
+	for (i = 0; buf[i] != '\0'; i++)
+	{
+	}
+
+	for (*wc = 0; buf[--i];)
+	{
+		if (buf[i] != 32 && (buf[i - 1] == 32 || buf[i - 1] == '\0'))
+			(*wc)++;
 	}
 }
