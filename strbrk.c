@@ -1,9 +1,9 @@
 #include "shell.h"
 
-char **strbrk(char *str, const char delim)
+char **strbrk(char *str, const char delim, unsigned int *wc)
 {
-	int c, i, j = 0;
-	short wc = 1, wordlen = 0;
+	unsigned int c, i, j = 0;
+	short wordlen = 0;
 	char **words;
 
 	if (!str)
@@ -11,14 +11,16 @@ char **strbrk(char *str, const char delim)
 		write(2, "Bad String Input\n", 17);
 		return (NULL);
 	}
-
-	for (i = 0; str[i]; i++)
+	for (i = 0, *wc = 1; str[i]; i++)
 	{
 		if (str[i] == delim)
-			wc++;
+			*wc += 1;
 	}
 
-	words = calloc((wc + 1), sizeof(char *));
+	words = calloc((*wc + 1), sizeof(char *));
+
+	if (!(words))
+		return (NULL);
 
 	for (i = 0; str[i]; i++, wordlen++)
 	{
@@ -31,14 +33,12 @@ char **strbrk(char *str, const char delim)
 		}
 	}
 
-	for (i = 0, j = 0; j < wc; j++, i++)
+	for (i = 0, j = 0; j < *wc; j++, i++)
 	{
 		for (c = 0; str[i] && str[i] != delim; c++, i++)
 		{
 			words[j][c] = str[i];
 		}
 	}
-	free(str);
-
 	return (words);
 }

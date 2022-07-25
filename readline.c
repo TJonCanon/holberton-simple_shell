@@ -1,41 +1,44 @@
 #include "shell.h"
 
-char *lsh_read_line(void)
+void dsh_read_line(char **buf)
 {
+	char *newbuf;
 	int bufsize = 128, pos = 0, c = 0;
-	char *buf;
 
-	buf = calloc(bufsize, sizeof(char));
+	newbuf = calloc(bufsize, sizeof(char));
 
-	if (!buf)
+	if (!newbuf)
 	{
-		perror("Agh! Bad allocation!\n");
+		perror("Error");
 		exit(EXIT_FAILURE);
 	}
 
-	while ((c = getchar()))
+	*buf = newbuf;
+
+	while ((c = getchar()) != EOF)
 	{
-		if (c == EOF || c == '\n')
+		if (c != '\n')
 		{
-			buf[pos] = '\0';
-			return (buf);
+			(*buf)[pos] = c;
 		}
 		else
 		{
-			buf[pos] = c;
+			(*buf)[pos] = '\0';
+			return;
 		}
 		pos++;
 
 		if (pos >= bufsize)
 		{
 			bufsize += 128;
-			buf = realloc(buf, bufsize);
+			*buf = realloc(*buf, bufsize);
 			if (!buf)
 			{
-				perror("Agh! Bad allocation!\n");
+				perror("Error");
 				exit(EXIT_FAILURE);
 			}
 		}
 	}
-	return (NULL);
+	free(*buf);
+	*buf = NULL;
 }

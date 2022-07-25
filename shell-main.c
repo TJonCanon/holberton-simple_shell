@@ -1,54 +1,59 @@
 #include "shell.h"
 
-void freestuff(char **split);
-char *lsh_read_line(void);
-
-int main(void)
+int main(int ac, char **av)
 {
-	char *PS1 = "$ ";
-	char *buf;
-	char **split;
-	int i;
-	bool live = true;
+	char *PS1 = "$ ", *buf = NULL, **split = NULL;
+	pid_t cpid;
+	int status;
+	unsigned int wc = 0;
+	(void) ac;
+	(void) av;
 
-	while (live)
-	{
+	do {
+		freestuff(split, &wc, buf);
+
 		printf("%s", PS1);
-		/* readline goes here */
-		/* buf = calloc(1024, sizeof(char)); */
-		/* characters = getline(&buf, &nchars, stdin); */
-		buf = lsh_read_line();
-		/*and ends here*/
-		split = strbrk(buf, ' ');
 
-		for (i = 0; split && split[i]; i++)
+		dsh_read_line(&buf);
+		if (!buf)
+			break;
+		if (*buf == '\0')
+			continue;
+
+		split = strbrk(buf, ' ', &wc);
+
+		if (!split)
+			continue;
+		/* somehow we need to detect if a valid command is provided prior */
+		/* to actually forking here. */
+
+		cpid = fork();
+
+		if (cpid != 0)
 		{
-			if (split[i][0] == 'x')
-				live = false;
-			write(1, split[i], strlen(split[i]));
-			putchar(10);
+			wait(&status);
+			continue;
 		}
-	}
-
-	printf("\nYou killed me!\n");
-
-	freestuff(split);
-
+		buf = NULL;
+		if (execve(split[0], split, NULL) == -1)
+			perror("Error");
+	} while (buf);
 	return (0);
 }
 
-void freestuff(char **split)
+void freestuff(char **split, unsigned int *wc, char *buf)
 {
-	int i;
+	unsigned int i;
 
-	for (i = 0; split[i]; i++)
-		putchar(i + '0');
+	if (buf)
+		free(buf);
 
-	putchar(10);
-
-	for (i = 0; i < 3; i++)
+	if (split)
 	{
-		free(split[i]);
+		for (i = 0; i < *wc; i++)
+		{
+			free(split[i]);
+		}
+		free(split);
 	}
-	free(split);
 }
