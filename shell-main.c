@@ -1,23 +1,28 @@
 #include "shell.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
-	char *PS1 = "$ ", *buf = NULL, **split = NULL;
+	char *PS1 = "$ ", *buf = NULL, **args = NULL;
 	pid_t cpid;
 	int status;
 	int wc = 0;
 	(void) ac;
-	(void) av;
+	(void) envp;
 
 	while (1)
 	{
+		args = av + 1;
 		printf("%s", PS1);
 
+		if (!*args)
+		{
 		dsh_read_line(&buf);
+		args = strbrk(buf, ' ', &wc);
+		}
+		else
+			args += ac;
 
-		split = strbrk(buf, ' ', &wc);
-
-		if (!split)
+		if (!*args)
 			goto fail;
 		/* somehow we need to detect if a valid command is provided prior */
 		/* to actually forking here. */
@@ -26,12 +31,12 @@ int main(int ac, char **av)
 
 		if (cpid == 0)
 		{
-			if (execve(split[0], split, NULL) == -1)
+			if (execve(args[0], args, NULL) == -1)
 				perror("Error");
 			exit(0);
 		}
 		wait(&status);
-fail:		freestuff(split, &wc, buf);
+fail:		freestuff(args, &wc, buf);
 	}
 	return (0);
 }

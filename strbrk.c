@@ -35,6 +35,8 @@ char **strbrk(char *buf, const char delim, int *wc)
 		{
 			words[j][c] = buf[i];
 		}
+		if (words[j][c - 1] == '\n')
+			words[j][c - 1] = '\0';
 	}
 	words[j] = NULL;
 	return (words);
