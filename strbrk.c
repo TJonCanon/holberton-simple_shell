@@ -1,43 +1,41 @@
 #include "shell.h"
 
-char **strbrk(char *str, const char delim)
+char **strbrk(char *buf, const char delim, int *wc)
 {
-	int i, j = 0;
-	short wc = 1, wordlen = 0;
+	int c, i, j = 0;
+	short wordlen = 0;
 	char **words;
 
-	if (!str)
-	{
-		perror("Bad String Input");
+	countwords(buf, wc);
+
+	squeeze_spaces(buf);
+
+	if (*buf == '\0' || *wc == 0)
 		return (NULL);
-	}
 
-	for (i = 0; str[i]; i++)
+	words = calloc((*wc + 1), sizeof(char *));
+
+	if (!(words))
+		return (NULL);
+
+	for (i = 0; buf[i]; i++, wordlen++)
 	{
-		if (str[i] == delim)
-			wc++;
-	}
-
-	words = malloc(sizeof(char *) * (wc + 1));
-
-	for (i = 0; str[i]; i++, wordlen++)
-	{
-		if (str[i] == delim || str[i] == 10)
+		if (buf[i] == delim || !buf[i + 1])
 		{
-			words[j] = malloc(wordlen * sizeof(char));
+			words[j] = calloc(++wordlen, sizeof(char));
 			wordlen = 0;
-			++i && ++j;
+			++i;
+			++j;
 		}
 	}
 
-	for (j = 0; j < wc; j++)
+	for (i = 0, j = 0; j < *wc; j++, i++)
 	{
-		for (i = 0; *str && *str != delim; i++, str++)
+		for (c = 0; buf[i] && buf[i] != delim; c++, i++)
 		{
-			words[j][i] = *str;
+			words[j][c] = buf[i];
 		}
-		str++;
 	}
-
+	words[j] = NULL;
 	return (words);
 }

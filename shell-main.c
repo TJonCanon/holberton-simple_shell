@@ -1,28 +1,37 @@
 #include "shell.h"
 
-int main(int ac, char **args)
+int main(int ac, char **av)
 {
-	char *PS1 = "$ ";
-	size_t nchars = 0, characters;
-	char *buf = NULL;
-	char **split;
-	bool live = true;
+	char *PS1 = "$ ", *buf = NULL, **split = NULL;
+	pid_t cpid;
+	int status;
+	int wc = 0;
+	(void) ac;
+	(void) av;
 
-	while (!feof(stdin))
+	while (1)
 	{
 		printf("%s", PS1);
 
-		characters = getline(&buf, &nchars, stdin);
+		dsh_read_line(&buf);
 
-		split = strbrk(buf, ' ');
+		split = strbrk(buf, ' ', &wc);
 
-		for (; *split; split++)
+		if (!split)
+			goto fail;
+		/* somehow we need to detect if a valid command is provided prior */
+		/* to actually forking here. */
+
+		cpid = fork();
+
+		if (cpid == 0)
 		{
-			printf("%s\n", *split);
+			if (execve(split[0], split, NULL) == -1)
+				perror("Error");
+			exit(0);
 		}
+		wait(&status);
+fail:		freestuff(split, &wc, buf);
 	}
-
-	printf("\nYou killed me!\n");
-
-	return (characters);
+	return (0);
 }
