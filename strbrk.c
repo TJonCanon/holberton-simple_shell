@@ -6,6 +6,10 @@ char **strbrk(char *buf, const char delim, int *wc)
 	short wordlen = 0;
 	char **words;
 
+	countwords(buf, wc);
+
+	squeeze_spaces(buf);
+
 	if (*buf == '\0' || *wc == 0)
 		return (NULL);
 
@@ -32,5 +36,6 @@ char **strbrk(char *buf, const char delim, int *wc)
 			words[j][c] = buf[i];
 		}
 	}
+	words[j] = NULL;
 	return (words);
 }
