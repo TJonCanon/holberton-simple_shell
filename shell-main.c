@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "$ ", *buf = NULL, **split = NULL;
 	pid_t cpid;
@@ -26,7 +26,7 @@ int main(int ac, char **av)
 
 		if (cpid == 0)
 		{
-			if (execve(split[0], split, NULL) == -1)
+			if (execve(split[0], split, envp) == -1)
 				perror("Error");
 			exit(0);
 		}
