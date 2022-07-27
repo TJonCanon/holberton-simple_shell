@@ -6,23 +6,17 @@ int main(int ac, char **av, char **envp)
 	pid_t cpid;
 	int status;
 	int wc = 0;
+
 	(void) ac;
-	(void) envp;
+	(void) av;
 
 	while (1)
 	{
-		args = av + 1;
 		printf("%s", PS1);
-
-		if (!*args)
-		{
 		dsh_read_line(&buf);
 		args = strbrk(buf, ' ', &wc);
-		}
-		else
-			args += ac;
 
-		if (!*args)
+		if (!args)
 			goto fail;
 		/* somehow we need to detect if a valid command is provided prior */
 		/* to actually forking here. */
@@ -31,7 +25,7 @@ int main(int ac, char **av, char **envp)
 
 		if (cpid == 0)
 		{
-			if (execve(args[0], args, NULL) == -1)
+			if (execve(args[0], args, envp) == -1)
 				perror("Error");
 			exit(0);
 		}

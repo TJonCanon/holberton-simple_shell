@@ -7,7 +7,7 @@ void freestuff(char **split, int *wc, char *buf)
 	if (buf)
 		free(buf);
 
-	if (split && *split)
+	if (*wc > 0)
 	{
 		for (i = 0; i < *wc; i++)
 		{
@@ -17,4 +17,5 @@ void freestuff(char **split, int *wc, char *buf)
 		free(split);
 		split = NULL;
 	}
+
 }
