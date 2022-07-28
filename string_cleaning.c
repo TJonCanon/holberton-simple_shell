@@ -1,6 +1,6 @@
 #include "shell.h"
 
-void countwords(char *buf, size_t *wc, const char dl)
+void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 {
 	int i = 0;
 
@@ -13,7 +13,7 @@ void countwords(char *buf, size_t *wc, const char dl)
 		{
 		}
 
-		for (; --i >= 0;)
+		for (*slen = i; --i >= 0;)
 		{
 			if (buf[i] != dl)
 			{

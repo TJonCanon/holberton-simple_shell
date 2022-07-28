@@ -2,10 +2,10 @@
 
 void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 {
-	unsigned int c, i, j = 0;
+	unsigned int c, i, j = 0, slen = 0;
 	short wordlen = 0;
 
-	countwords(buf, wc, delim);
+	countwords(buf, wc, delim, &slen);
 
 	squeeze_spaces(buf);
 
@@ -17,7 +17,7 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 	if (!(*args))
 		return;
 
-	for (i = 0; buf[i]; i++, wordlen++)
+	for (i = 0; i < slen; i++, wordlen++)
 	{
 		if (buf[i] == delim || !buf[i + 1])
 		{
@@ -34,6 +34,7 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 		{
 			args[0][j][c] = buf[i];
 		}
+		args[0][j][c] = '\0';
 
 	}
 	args[0][j] = NULL;
