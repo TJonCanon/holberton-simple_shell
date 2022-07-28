@@ -1,7 +1,7 @@
 # [<center>0x17. C - Simple Shell - 1142</center>](https://intranet.hbtn.io/projects/1142)
  ---
  ### <center>Description</center>
- ##### &emsp; This is an interpretation of the original shell used in LINUX terminals in a simpler form. This simple shell can preform a set list of commands from the environment and can use built-in functions in the interactive and non-interactive modes. 
+ ##### This is an interpretation of the original shell used in LINUX terminals in a simpler form. This simple shell can preform a set list of commands from the environment and can use built-in functions in the interactive and non-interactive modes. 
 ### Compilation:
 The simple shell is compiled using the following command:
 ```sh
