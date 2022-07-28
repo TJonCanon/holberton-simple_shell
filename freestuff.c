@@ -1,8 +1,8 @@
 #include "shell.h"
 
-void freestuff(char **split, int *wc, char *buf)
+void freestuff(char **split, size_t *wc, char *buf)
 {
-	int i;
+	unsigned int i;
 
 	if (buf)
 		free(buf);
@@ -17,5 +17,4 @@ void freestuff(char **split, int *wc, char *buf)
 		free(split);
 		split = NULL;
 	}
-
 }

@@ -3,7 +3,8 @@
 void dsh_read_line(char **buf)
 {
 	char *newbuf;
-	int bufsize = 128, pos = 0, c = 0;
+	size_t bufsize = 128, pos = 0;
+	int c = 0;
 
 	newbuf = calloc(bufsize, sizeof(char));
 

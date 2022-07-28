@@ -1,28 +1,27 @@
 #include "shell.h"
 
-char **strbrk(char *buf, const char delim, int *wc)
+void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 {
-	int c, i, j = 0;
+	unsigned int c, i, j = 0;
 	short wordlen = 0;
-	char **words;
 
-	countwords(buf, wc);
+	countwords(buf, wc, delim);
 
 	squeeze_spaces(buf);
 
 	if (*buf == '\0' || *wc == 0)
-		return (NULL);
+		return;
 
-	words = calloc((*wc + 1), sizeof(char *));
+	*args = calloc((*wc + 1), sizeof(char *));
 
-	if (!(words))
-		return (NULL);
+	if (!(*args))
+		return;
 
 	for (i = 0; buf[i]; i++, wordlen++)
 	{
 		if (buf[i] == delim || !buf[i + 1])
 		{
-			words[j] = calloc(++wordlen, sizeof(char));
+			args[0][j] = calloc(++wordlen, sizeof(char));
 			wordlen = 0;
 			++i;
 			++j;
@@ -33,11 +32,9 @@ char **strbrk(char *buf, const char delim, int *wc)
 	{
 		for (c = 0; buf[i] && buf[i] != delim; c++, i++)
 		{
-			words[j][c] = buf[i];
+			args[0][j][c] = buf[i];
 		}
-		if (words[j][c - 1] == '\n')
-			words[j][c - 1] = '\0';
+
 	}
-	words[j] = NULL;
-	return (words);
+	args[0][j] = NULL;
 }

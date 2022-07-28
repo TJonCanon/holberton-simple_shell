@@ -1,6 +1,6 @@
 #include "shell.h"
 
-void countwords(char *buf, int *wc)
+void countwords(char *buf, size_t *wc, const char dl)
 {
 	int i = 0;
 
@@ -15,9 +15,9 @@ void countwords(char *buf, int *wc)
 
 		for (; --i >= 0;)
 		{
-			if (buf[i] != 32)
+			if (buf[i] != dl)
 			{
-				if (buf[i + 1] == 32 || buf[i + 1] == '\0')
+				if (buf[i + 1] == dl || buf[i + 1] == '\0')
 					(*wc)++;
 			}
 		}
