@@ -41,3 +41,48 @@ void squeeze_spaces(char *str_d)
 			}
 	}
 }
+
+/**
+ * _strcat - Concatenates two strings
+ * @dest: destination string
+ * @src: string to be appended to dest
+ * Return: pointer to destination string
+ */
+
+void _strcat(char **dest, char *src)
+{
+	int dn, sn;
+
+	for (dn = 0 ; dest[0][dn] != '\0' ; dn++)
+	{
+	}
+	for (sn = 0 ; src[sn] != '\0' ; sn++)
+	{
+	}
+	dest[0] = realloc(dest[0], (dn + ++sn) + 1);
+
+	dest[0][dn++] = '/';
+	for (sn = 0 ; src[sn] != '\0' ; sn++, dn++)
+	{
+		dest[0][dn] = src[sn];
+	}
+	dest[0][dn] = '\0';
+}
+
+/**
+ * _strcpy - copies one string to another location
+ * Return: pointer to destination string
+ * @dest: location to copy to
+ * @src: string to be copied
+ */
+
+void _strcpy(char **dest, char *src)
+{
+	int c;
+
+	for (c = 0; src[c]; c++)
+	{
+		dest[0][c] = src[c];
+	}
+	dest[0][c] = '\0';
+}

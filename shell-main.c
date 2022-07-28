@@ -4,7 +4,7 @@ int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "$ ", *buf = NULL,  *path = NULL;
 	char **args = NULL, **pathsplit = NULL;
-	int i = 0, status, interactive = isatty(STDIN_FILENO);
+	int i = 0, c = 0, status, interactive = isatty(STDIN_FILENO);
 	pid_t cpid;
 	size_t wc = 0, pathc = 0;
 
@@ -23,26 +23,32 @@ int main(int ac, char **av, char **envp)
 
 		if (access(args[0], F_OK) == 0)
 		{
-			cpid = fork();
+exec:                   cpid = fork();
 
 			if (cpid == 0)
 			{
 				if (execve(args[0], args, envp) == -1)
 					perror("Error");
+				exit(0);
 			}
 			wait(&status);
 		}
 		else
 		{
 			path = getenv("PATH");
-			for (i = 0; path[i]; i++)
-			{
-			}
-			printf("Find it in here: %s\nPath Length: %d\n", path, i);
 			strbrk(path, &pathsplit, ':', &pathc);
 			for (i = 0; pathsplit[i] != NULL; i++)
 			{
-				printf("%s\n", pathsplit[i]);
+				_strcat(&pathsplit[i], args[0]);
+				if (access(pathsplit[i], F_OK) == 0)
+				{
+					for (c = 0; pathsplit[i][c] != '\0'; c++)
+					{
+					}
+					args[0] = realloc(args[0], ++c);
+					_strcpy(&args[0], pathsplit[i]);
+					goto exec;
+				}
 				free(pathsplit[i]);
 			}
 			free(pathsplit);

@@ -17,6 +17,8 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc);
 /* Subroutines */
 void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen);
 void squeeze_spaces(char *str_d);
+void _strcat(char **dest, char *src);
+void _strcpy(char **dest, char *src);
 /* Macros  */
 #define ignoreargs do {				\
 		((void) ac) ;			\
