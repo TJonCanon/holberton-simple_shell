@@ -2,36 +2,48 @@
 
 int main(int ac, char **av, char **envp)
 {
-	char *PS1 = "$ ", *buf = NULL, **split = NULL;
+	char *PS1 = "$ ", *buf = NULL,  *path = NULL;
+	char **args = NULL, **pathsplit = NULL;
+	int status, interactive = isatty(STDIN_FILENO);
 	pid_t cpid;
-	int status;
-	int wc = 0;
-	(void) ac;
-	(void) av;
+	size_t wc = 0;
 
-	while (1)
-	{
-		printf("%s", PS1);
+	ignoreargs;
 
+	do {
+		if (interactive)
+			printf("%s", PS1);
 		dsh_read_line(&buf);
+		strbrk(buf, &args, ' ', &wc);
 
-		split = strbrk(buf, ' ', &wc);
-
-		if (!split)
+		if (!args)
 			goto fail;
 		/* somehow we need to detect if a valid command is provided prior */
 		/* to actually forking here. */
 
-		cpid = fork();
-
-		if (cpid == 0)
+		if (access(args[0], F_OK) == 0)
 		{
-			if (execve(split[0], split, envp) == -1)
-				perror("Error");
-			exit(0);
+			cpid = fork();
+
+			if (cpid == 0)
+			{
+				if (execve(args[0], args, envp) == -1)
+					perror("Error");
+			}
+			wait(&status);
 		}
-		wait(&status);
-fail:		freestuff(split, &wc, buf);
-	}
+		else
+		{
+			path = getenv("PATH");
+			printf("Find it in here: %s\n", path);
+			strbrk(path, &pathsplit, ':', &wc);
+			for (; *pathsplit; pathsplit++)
+				printf("%s\n", *pathsplit);
+		}
+
+fail:		freestuff(args, &wc, buf);
+
+	} while (interactive);
+
 	return (0);
 }
