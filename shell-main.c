@@ -4,9 +4,9 @@ int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "$ ", *buf = NULL,  *path = NULL;
 	char **args = NULL, **pathsplit = NULL;
-	int status, interactive = isatty(STDIN_FILENO);
+	int i = 0, status, interactive = isatty(STDIN_FILENO);
 	pid_t cpid;
-	size_t wc = 0;
+	size_t wc = 0, pathc = 0;
 
 	ignoreargs;
 
@@ -35,10 +35,17 @@ int main(int ac, char **av, char **envp)
 		else
 		{
 			path = getenv("PATH");
-			printf("Find it in here: %s\n", path);
-			strbrk(path, &pathsplit, ':', &wc);
-			for (; *pathsplit; pathsplit++)
-				printf("%s\n", *pathsplit);
+			for (i = 0; path[i]; i++)
+			{
+			}
+			printf("Find it in here: %s\nPath Length: %d\n", path, i);
+			strbrk(path, &pathsplit, ':', &pathc);
+			for (i = 0; pathsplit[i] != NULL; i++)
+			{
+				printf("%s\n", pathsplit[i]);
+				free(pathsplit[i]);
+			}
+			free(pathsplit);
 		}
 
 fail:		freestuff(args, &wc, buf);

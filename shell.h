@@ -15,7 +15,7 @@ void dsh_read_line(char **buf);
 void freestuff(char **split, size_t *wc, char *buf);
 void strbrk(char *buf, char ***args, const char delim, size_t *wc);
 /* Subroutines */
-void countwords(char *buf, size_t *wc, const char dl);
+void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen);
 void squeeze_spaces(char *str_d);
 /* Macros  */
 #define ignoreargs do {				\
