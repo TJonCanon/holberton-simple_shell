@@ -17,6 +17,12 @@ int _strlen(char *s)
 	return (i);
 }
 
+/**
+ * print_revstring - prints string in revese
+ * @args: va_list of string elements
+ * @bigbuf: buffer to print to
+ * Return: chars printed
+ */
 int print_revstring(va_list args, char *bigbuf)
 {
 	char *s;
@@ -37,6 +43,12 @@ int print_revstring(va_list args, char *bigbuf)
 	return (count);
 }
 
+/**
+ * print_rot13string - writes rot13'd string to buffer
+ * @args: va_list of string elements
+ * @bigbuf: buffer to write to
+ * Return: chars printed
+ */
 int print_rot13string(va_list args, char *bigbuf)
 {
 	char *s;
