@@ -28,9 +28,9 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
 	if (!(*args))
 	{
 badmem:		perror(name);
+		free(buf);
 		exit(0);
 	}
-
 	for (i = 0; i < slen; i++, wordlen++)
 	{
 		if (!buf[i + 1])

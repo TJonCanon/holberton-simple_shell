@@ -18,7 +18,7 @@ int main(int ac, char **av, char **envp)
 
 	do {
 		if (interactive)
-			printf("%s @ %s %s", getenv("USER"), getenv("PWD"), PS1);
+			_printf("%s @ %s %s", getenv("USER"), getenv("PWD"), PS1);
 		dsh_read_line(&buf, av[0]);
 
 		if (buf)
@@ -30,7 +30,7 @@ int main(int ac, char **av, char **envp)
 			if (_strcmp(buf, "env") == 0)
 			{
 				for (i = 0; envp[i]; i++)
-					printf("%s\n", envp[i]);
+					_printf("%s\n", envp[i]);
 				free(buf);
 				continue;
 			}

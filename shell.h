@@ -10,6 +10,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <unistd.h>
+/* Printf Lib */
+#include "printf.h"
 /* Main Routines */
 void dsh_read_line(char **buf, char *name);
 void freestuff(char **args, size_t *wc, char *buf, char **path, size_t *pathc);
