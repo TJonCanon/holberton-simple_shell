@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "printf.h"
 /**
  * main - runs the simple shell
  * @ac: argc
