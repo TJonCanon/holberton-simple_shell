@@ -45,7 +45,7 @@ void squeeze_spaces(char *str_d, unsigned int *slen)
 
 	for (i--; i >= 0; i--)
 	{
-		if (str_d[i] == 32 && (str_d[i - 1] == 32 || str_d[i + 1] == 0 || i == 0))
+		if (str_d[i] == 32 && (i == 0 || str_d[i - 1] == 32 || str_d[i + 1] == 0))
 			for (c = i; str_d[c]; c++)
 			{
 				str_d[c] = str_d[c + 1];
