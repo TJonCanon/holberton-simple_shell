@@ -7,7 +7,8 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 
 	countwords(buf, wc, delim, &slen);
 
-	squeeze_spaces(buf);
+	if (delim == ' ')
+		squeeze_spaces(buf, &slen);
 
 	if (*buf == '\0' || *wc == 0)
 		return;

@@ -24,7 +24,7 @@ void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 	}
 }
 
-void squeeze_spaces(char *str_d)
+void squeeze_spaces(char *str_d, unsigned int *slen)
 {
 	int i = 0, c = 0;
 
@@ -39,6 +39,9 @@ void squeeze_spaces(char *str_d)
 			{
 				str_d[c] = str_d[c + 1];
 			}
+	}
+	for (*slen = 0; str_d[*slen]; (*slen)++)
+	{
 	}
 }
 
