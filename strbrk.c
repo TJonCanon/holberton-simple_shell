@@ -7,7 +7,8 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 
 	countwords(buf, wc, delim, &slen);
 
-	squeeze_spaces(buf);
+	if (delim == ' ')
+		squeeze_spaces(buf, &slen);
 
 	if (*buf == '\0' || *wc == 0)
 		return;
@@ -19,6 +20,8 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 
 	for (i = 0; i < slen; i++, wordlen++)
 	{
+		if (!buf[i + 1])
+			wordlen++;
 		if (buf[i] == delim || !buf[i + 1])
 		{
 			args[0][j] = calloc(++wordlen, sizeof(char));
