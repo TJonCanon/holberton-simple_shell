@@ -3,7 +3,15 @@
 		i++; \
 		j++; \
 	} while (0)
-void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
+/**
+ * strbrk - 
+ * @buf: buffer
+ * @args: arguments
+ * @delim: delimeter
+ * @wc: Word count
+ * Return - void
+ */
+ void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
 {
 	unsigned int c, i, j = 0, slen = 0;
 	short wordlen = 0;

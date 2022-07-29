@@ -1,6 +1,14 @@
 #include "shell.h"
-
-void freestuff(char **args, size_t *wc, char *buf, char **path, size_t *pathc)
+/**
+ * freestuff - 
+ * @args: arguments
+ * @wc: word count
+ * @buf: buffer
+ * @paths: path 1
+ * @pathc: path 2
+ * Return - void
+ */
+void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
 {
 	unsigned int i;
 

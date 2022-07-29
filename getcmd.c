@@ -1,6 +1,14 @@
 #include "shell.h"
 #define _strlen(str, len) for (len = 0; str[len] != '\0'; len++)
-void getcmd(char **args, char ***paths, size_t *pathc, char *name)
+/**
+ * getcmd - gathers commands
+ * @args: arguments
+ * @envp: environmental
+ * @pathsplit: path split
+ * @pathc: pathc
+ * Return - void
+ */
+void getcmd(char **args, char **envp, char ***pathsplit, size_t *pathc)
 {
 	char *path;
 	int  i = 0, c = 0;
