@@ -8,7 +8,7 @@
  * @pathc: pathc
  * Return - void
  */
-void getcmd(char **args, char **envp, char ***pathsplit, size_t *pathc)
+void getcmd(char **args, char ***paths, size_t *pathc, char *name)
 {
 	char *path;
 	int  i = 0, c = 0;

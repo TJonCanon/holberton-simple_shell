@@ -29,10 +29,10 @@ void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
 	{
 		for (i = 0; i < *pathc; i++)
 		{
-			free(path[i]);
-			path[i] = NULL;
+			free(paths[i]);
+			paths[i] = NULL;
 		}
-		free(path);
-		path = NULL;
+		free(paths);
+		paths = NULL;
 	}
 }

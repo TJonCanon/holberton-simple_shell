@@ -5,7 +5,6 @@
  * @envp: environmental
  * @args: arguments
  * @name: program name
- * Return - void
  */
 
 void execfork(char **envp, char **args, char *name)
