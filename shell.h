@@ -12,11 +12,15 @@
 #include <unistd.h>
 /* Main Routines */
 void dsh_read_line(char **buf);
-void freestuff(char **split, size_t *wc, char *buf);
+void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc);
 void strbrk(char *buf, char ***args, const char delim, size_t *wc);
+void getcmd(char **args, char **envp, char ***pathsplit, size_t *pathc);
+void execfork(char **envp, char **args);
 /* Subroutines */
 void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen);
-void squeeze_spaces(char *str_d);
+void squeeze_spaces(char *str_d, unsigned int *slen);
+void _strcat(char **dest, char *src);
+void _strcpy(char **dest, char *src);
 /* Macros  */
 #define ignoreargs do {				\
 		((void) ac) ;			\
