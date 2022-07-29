@@ -4,10 +4,11 @@
  * execfork - executes a fork
  * @envp: environmental
  * @args: arguments
+ * @name: program name
  * Return - void
  */
- 
- void execfork(char **envp, char **args, char *name)
+
+void execfork(char **envp, char **args, char *name)
 {
 	pid_t cpid;
 	int status;

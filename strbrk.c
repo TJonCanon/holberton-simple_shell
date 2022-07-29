@@ -4,14 +4,15 @@
 		j++; \
 	} while (0)
 /**
- * strbrk - 
+ * strbrk - takes one string and spits into a double pointer
  * @buf: buffer
  * @args: arguments
  * @delim: delimeter
  * @wc: Word count
+ * @name: program name
  * Return - void
  */
- void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
+void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
 {
 	unsigned int c, i, j = 0, slen = 0;
 	short wordlen = 0;

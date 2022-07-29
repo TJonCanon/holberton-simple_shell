@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * freestuff - 
+ * freestuff - frees data structures used by shell
  * @args: arguments
  * @wc: word count
  * @buf: buffer

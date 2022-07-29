@@ -1,5 +1,12 @@
 #include "shell.h"
-
+/**
+ * countwords - counts number of words
+ * @buf: buffer
+ * @wc: word count
+ * @dl: delimiter
+ * @slen: string length
+ * return - void
+ */
 void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 {
 	int i = 0;
@@ -23,7 +30,11 @@ void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 		}
 	}
 }
-
+/**
+ * squeeze_spaces - squeeze spaces
+ * @str_d: string d
+ * @slen: string length
+ */
 void squeeze_spaces(char *str_d, unsigned int *slen)
 {
 	int i = 0, c = 0;
