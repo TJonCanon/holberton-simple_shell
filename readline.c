@@ -1,6 +1,6 @@
 #include "shell.h"
 
-void dsh_read_line(char **buf)
+void dsh_read_line(char **buf, char *name)
 {
 	char *newbuf;
 	size_t bufsize = 128, pos = 0;
@@ -10,7 +10,7 @@ void dsh_read_line(char **buf)
 
 	if (!newbuf)
 	{
-		perror("Error");
+		perror(name);
 		exit(EXIT_FAILURE);
 	}
 
@@ -35,7 +35,7 @@ void dsh_read_line(char **buf)
 			*buf = realloc(*buf, bufsize);
 			if (!buf)
 			{
-				perror("Error");
+				perror(name);
 				exit(EXIT_FAILURE);
 			}
 		}

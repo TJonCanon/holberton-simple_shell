@@ -1,22 +1,26 @@
 #include "shell.h"
-
-void strbrk(char *buf, char ***args, const char delim, size_t *wc)
+#define doubleincrement(i, j) do { \
+		i++; \
+		j++; \
+	} while (0)
+void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
 {
 	unsigned int c, i, j = 0, slen = 0;
 	short wordlen = 0;
 
 	countwords(buf, wc, delim, &slen);
-
 	if (delim == ' ')
 		squeeze_spaces(buf, &slen);
-
-	if (*buf == '\0' || *wc == 0)
+	if (!buf || *buf == '\0' || *wc == 0)
 		return;
 
 	*args = calloc((*wc + 1), sizeof(char *));
 
 	if (!(*args))
-		return;
+	{
+badmem:		perror(name);
+		exit(0);
+	}
 
 	for (i = 0; i < slen; i++, wordlen++)
 	{
@@ -25,9 +29,10 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 		if (buf[i] == delim || !buf[i + 1])
 		{
 			args[0][j] = calloc(++wordlen, sizeof(char));
+			if (!args[0][j])
+				goto badmem;
 			wordlen = 0;
-			++i;
-			++j;
+			doubleincrement(i, j);
 		}
 	}
 
@@ -38,7 +43,6 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 			args[0][j][c] = buf[i];
 		}
 		args[0][j][c] = '\0';
-
 	}
 	args[0][j] = NULL;
 }

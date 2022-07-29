@@ -1,6 +1,6 @@
 #include "shell.h"
 
-void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
+void freestuff(char **args, size_t *wc, char *buf, char **path, size_t *pathc)
 {
 	unsigned int i;
 
@@ -21,10 +21,10 @@ void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
 	{
 		for (i = 0; i < *pathc; i++)
 		{
-			free(paths[i]);
-			paths[i] = NULL;
+			free(path[i]);
+			path[i] = NULL;
 		}
-		free(paths);
-		paths = NULL;
+		free(path);
+		path = NULL;
 	}
 }

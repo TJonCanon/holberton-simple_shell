@@ -1,6 +1,6 @@
 #include "shell.h"
-
-void getcmd(char **args, char **envp, char ***pathsplit, size_t *pathc)
+#define _strlen(str, len) for (len = 0; str[len] != '\0'; len++)
+void getcmd(char **args, char ***paths, size_t *pathc, char *name)
 {
 	char *path;
 	int  i = 0, c = 0;
@@ -10,21 +10,18 @@ void getcmd(char **args, char **envp, char ***pathsplit, size_t *pathc)
 	if (access(args[0], F_OK) != 0)
 	{
 		path = getenv("PATH");
-		strbrk(path, pathsplit, ':', pathc);
-		for (i = 0; pathsplit[0][i] != NULL; i++)
+		strbrk(path, paths, ':', pathc, name);
+		for (i = 0; paths[0][i] != NULL; i++)
 		{
-			_strcat(&pathsplit[0][i], args[0]);
-			if (access(pathsplit[0][i], F_OK) == 0)
+			_strcat(&paths[0][i], args[0]);
+			if (access(paths[0][i], F_OK) == 0)
 			{
-				for (c = 0; pathsplit[0][i][c] != '\0'; c++)
-				{
-				}
+				_strlen(paths[0][i], c);
+
 				args[0] = realloc(args[0], ++c);
-				_strcpy(&args[0], pathsplit[0][i]);
-				execfork(envp, args);
-				return;
+
+				_strcpy(&args[0], paths[0][i]);
 			}
 		}
-		perror("Error");
 	}
 }
