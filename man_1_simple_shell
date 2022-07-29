@@ -1,0 +1,52 @@
+.Dd 7/28/22               \" DATE
+.Dt simple_shell()      \" Program name and manual section number
+.Os Corley/Joyner
+.Sh NAME                 \" Section Header - required - don't modify
+.Nm ./hsh
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line.
+.Nd a simple shell that executes commands and arguments
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm int main(int argc, char **argv, char **env)
+.Sh DESCRIPTION          \" Section Header - required - don't modify
+This is an interpretation of the original shell used in LINUX terminals in a simpler form. This simple shell can perform a set list of commands from the environment and can use built-in functions in the interactive and non-interactive modes.
+.Sh LINUX COMMANDS
+This simple shell uses standard LINUX commands that can be executed within the shell. The user can use these commands by inputing the command with the appropriate arguments:
+.br
+.br
+ex:
+.Ar ls
+.br
+.br
+Or by typing the command's full filepath:
+.br
+.br
+ex:
+.Ar /bin/ls
+.Sh BUILT-IN COMMANDS
+In addition to Linux commands from the environment, our simple shell contains a number of
+built-in commands:
+.br
+.br
+.Ar env
+- prints list of environment variables
+.br
+.Ar cd
+- Changes the the active directory
+.br
+.Ar clear
+- clears all previous output
+.br
+.Ar exit
+- exits the shell
+.br
+.Sh RETURN VALUE
+exit Using
+.Ar exit
+or
+.Ar ctrl+D
+returns 0.
+.Sh AUTHOR
+Dave Corley
+.br
+Taylor Joyner
