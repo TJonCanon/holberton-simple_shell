@@ -1,18 +1,20 @@
 #include "shell.h"
+
 /**
  * execfork - executes a fork
  * @envp: environmental
  * @args: arguments
  * Return - void
  */
-void execfork(char **envp, char **args)
+ 
+ void execfork(char **envp, char **args, char *name)
 {
 	pid_t cpid;
 	int status;
 
-	if (access(args[0], X_OK) != 0)
+	if (access(args[0], X_OK) != 0 || access(args[0], F_OK) != 0)
 	{
-		perror("Error");
+		perror(name);
 		return;
 	}
 	cpid = fork();
