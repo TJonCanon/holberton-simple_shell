@@ -14,6 +14,10 @@ void getcmd(char **args, char ***paths, size_t *pathc, char *name)
 
 	if (!args)
 		return;
+	if (!getenv("PATH") || *getenv("PATH") == '\0')
+	{
+		return;
+	}
 	if (access(args[0], F_OK) != 0)
 	{
 		path = getenv("PATH");
