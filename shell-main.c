@@ -1,5 +1,11 @@
 #include "shell.h"
-
+/**
+ * main - runs the simple shell
+ * @ac: argc
+ * @av: argv
+ * @envp: environmental
+ * Return - 0
+ */
 int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "($) ", *buf = NULL, **pathsplit = NULL;

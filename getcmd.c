@@ -1,5 +1,12 @@
 #include "shell.h"
-
+/**
+ * getcmd - gathers commands
+ * @args: arguments
+ * @envp: environmental
+ * @pathsplit: path split
+ * @pathc: pathc
+ * Return - void
+ */
 void getcmd(char **args, char **envp, char ***pathsplit, size_t *pathc)
 {
 	char *path;

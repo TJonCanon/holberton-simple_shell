@@ -1,5 +1,10 @@
 #include "shell.h"
-
+/**
+ * execfork - executes a fork
+ * @envp: environmental
+ * @args: arguments
+ * Return - void
+ */
 void execfork(char **envp, char **args)
 {
 	pid_t cpid;

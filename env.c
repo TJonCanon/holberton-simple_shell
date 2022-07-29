@@ -1,5 +1,11 @@
 #include <stdio.h>
-
+/**
+ * main - gives the value of env
+ * @ac: argc
+ * @av: argv
+ * @envp: environmental
+ * Return - 0
+ */
 int main(int ac, char **av, char **envp)
 {
 	int i = 0;

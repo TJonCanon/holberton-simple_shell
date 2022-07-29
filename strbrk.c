@@ -1,5 +1,12 @@
 #include "shell.h"
-
+/**
+ * strbrk - 
+ * @buf: buffer
+ * @args: arguments
+ * @delim: delimeter
+ * @wc: Word count
+ * Return - void
+ */
 void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 {
 	unsigned int c, i, j = 0, slen = 0;
