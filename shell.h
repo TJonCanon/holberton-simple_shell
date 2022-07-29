@@ -22,6 +22,7 @@ void squeeze_spaces(char *str_d, unsigned int *slen);
 void _strcat(char **dest, char *src);
 void _strcpy(char **dest, char *src);
 int _strcmp(char *s1, char *s2);
+void dsh_exit(char *buf);
 /* Macros  */
 #define ignoreargs do {				\
 		((void) ac) ;			\

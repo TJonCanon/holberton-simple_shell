@@ -6,6 +6,7 @@
  * @envp: environmental
  * Return: 0
  */
+
 int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "($) ", *buf = NULL, **pathsplit = NULL;
@@ -24,8 +25,7 @@ int main(int ac, char **av, char **envp)
 		{
 			if (_strcmp(buf, "exit") == 0)
 			{
-				free(buf);
-				exit(0);
+				dsh_exit(buf);
 			}
 			if (_strcmp(buf, "env") == 0)
 			{
