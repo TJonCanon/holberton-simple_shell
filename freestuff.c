@@ -34,5 +34,6 @@ void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
 		}
 		free(paths);
 		paths = NULL;
+		*pathc = 0;
 	}
 }

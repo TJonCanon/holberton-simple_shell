@@ -23,7 +23,7 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
 	if (!buf || *buf == '\0' || *wc == 0)
 		return;
 
-	*args = calloc((*wc + 1), sizeof(char *));
+	*args = malloc((*wc + 1) * sizeof(char *));
 
 	if (!(*args))
 	{
@@ -37,7 +37,7 @@ badmem:		perror(name);
 			wordlen++;
 		if (buf[i] == delim || !buf[i + 1])
 		{
-			args[0][j] = calloc(++wordlen, sizeof(char));
+			args[0][j] = malloc(++wordlen * sizeof(char));
 			if (!args[0][j])
 				goto badmem;
 			wordlen = 0;

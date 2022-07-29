@@ -12,7 +12,7 @@ void dsh_read_line(char **buf, char *name)
 	size_t bufsize = 128, pos = 0;
 	int c = 0;
 
-	newbuf = calloc(bufsize, sizeof(char));
+	newbuf = malloc(bufsize * sizeof(char));
 
 	if (!newbuf)
 	{
