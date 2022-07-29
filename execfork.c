@@ -22,8 +22,10 @@ void execfork(char **envp, char **args, char *name)
 	if (cpid == 0)
 	{
 		if (execve(args[0], args, envp) == -1)
-			/* perror("Error"); */
-			exit(0);
+		{
+			perror(name);
+			_exit(0);
+		}
 	}
 	wait(&status);
 }
