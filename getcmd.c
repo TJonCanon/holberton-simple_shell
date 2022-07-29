@@ -3,10 +3,9 @@
 /**
  * getcmd - gathers commands
  * @args: arguments
- * @envp: environmental
- * @pathsplit: path split
- * @pathc: pathc
- * Return - void
+ * @paths: pointer to store each path element
+ * @pathc: number of path elements
+ * @name: name of program as invoked
  */
 void getcmd(char **args, char ***paths, size_t *pathc, char *name)
 {
