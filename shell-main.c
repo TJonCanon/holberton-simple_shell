@@ -24,7 +24,7 @@ int main(int ac, char **av, char **envp)
 
 		if (buf && *buf)
 		{
-			if (_strcmp(buf, "exit") == 0)
+			if (_strcmp(buf, "exit") == 4)
 			{
 				dsh_exit(buf);
 			}
