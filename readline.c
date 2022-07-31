@@ -3,7 +3,6 @@
 /**
  * dsh_read_line - reads line
  * @buf: buffer
- * @name: program name
  */
 void dsh_read_line(char **buf)
 {
