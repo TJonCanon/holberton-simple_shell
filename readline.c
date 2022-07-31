@@ -5,17 +5,16 @@
  * @buf: buffer
  * @name: program name
  */
-void dsh_read_line(char **buf, char *name)
+void dsh_read_line(char **buf)
 {
 	char *newbuf = NULL;
 	size_t bufsize = 128, pos = 0;
 	int c = 0;
+	unsigned int i;
 
 	newbuf = calloc(bufsize, sizeof(char));
-
 	if (!newbuf)
 		return;
-
 	*buf = newbuf;
 
 	while ((c = getc(stdin)) != EOF)
@@ -36,10 +35,9 @@ void dsh_read_line(char **buf, char *name)
 		{
 			*buf = realloc(*buf, bufsize *= 2);
 			if (!buf)
-			{
-				perror(name);
-				exit(EXIT_FAILURE);
-			}
+				return;
+			for (i = pos; i < bufsize; i++)
+				(*buf)[i] = '\0';
 		}
 	}
 	if (c == -1 && isatty(STDIN_FILENO))

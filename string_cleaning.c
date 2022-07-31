@@ -17,8 +17,7 @@ void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 	if (*buf != '\0')
 	{
 		for (; buf[++i] != '\0';)
-		{
-		}
+		;
 
 		for (*slen = i; --i >= 0;)
 		{
@@ -32,8 +31,8 @@ void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 }
 /**
  * squeeze_spaces - squeeze spaces
- * @str_d: string d
- * @slen: string length
+ * @str_d: string to clean
+ * @slen: string length after clenaing
  */
 void squeeze_spaces(char *str_d, unsigned int *slen)
 {

@@ -20,7 +20,7 @@ int main(int ac, char **av, char **envp)
 	do {
 		if (interactive)
 			_printf("%s @ %s %s", getenv("USER"), getenv("PWD"), PS1);
-		dsh_read_line(&buf, av[0]);
+		dsh_read_line(&buf);
 
 		if (buf && *buf)
 		{

@@ -18,11 +18,11 @@ void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 
 	countwords(buf, wc, delim, &slen);
 
-	if (delim == ' ')
-		squeeze_spaces(buf, &slen);
-
 	if (!buf || *buf == '\0' || *wc == 0)
 		return;
+
+	if (delim == ' ')
+		squeeze_spaces(buf, &slen);
 
 	*args = malloc((*wc + 1) * sizeof(char *));
 

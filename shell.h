@@ -12,7 +12,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 /* Main Routines */
-void dsh_read_line(char **buf, char *name);
+void dsh_read_line(char **buf);
 void freestuff(char ***args, size_t *wc, char *buf, char ***ps, size_t *pc);
 void strbrk(char *buf, char ***args, const char delim, size_t *wc);
 void countcmd(char **args, char **paths, size_t *pathc);
