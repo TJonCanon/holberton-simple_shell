@@ -16,13 +16,15 @@ void dsh_read_line(char **buf)
 	if (!newbuf)
 		return;
 	*buf = newbuf;
-
 	while ((c = getc(stdin)) != EOF)
 	{
 		if (c == '\n')
 		{
 			if (!isatty(STDIN_FILENO))
+			{
+				(*buf)[pos++] = 32;
 				continue;
+			}
 			else
 			{
 				(*buf)[pos] = '\0';
