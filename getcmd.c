@@ -6,7 +6,7 @@
  * @paths: pointer to store each path element
  * @cmdc: pointer to valid command count
  */
-void countcmd(char **args, char **paths, size_t *cmdc)
+void countcmd(char **args, char **paths, size_t *cmdc, bool *err)
 {
 	int  i, j;
 	char *name = NULL;
@@ -19,6 +19,7 @@ void countcmd(char **args, char **paths, size_t *cmdc)
 	{
 		if (_strcmp("exit", args[j]) == 0)
 		{
+			*err = true;
 			nullify(args[j]);
 			continue;
 		}

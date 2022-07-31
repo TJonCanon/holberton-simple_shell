@@ -15,7 +15,7 @@
 void dsh_read_line(char **buf);
 void freestuff(char ***args, size_t *wc, char *buf, char ***ps, size_t *pc);
 void strbrk(char *buf, char ***args, const char delim, size_t *wc);
-void countcmd(char **args, char **paths, size_t *pathc);
+void countcmd(char **args, char **paths, size_t *pathc, bool *err);
 void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths);
 /* Subroutines */
 void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen);

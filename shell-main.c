@@ -14,7 +14,7 @@ int main(int ac, char **av, char **envp)
 	char **args = NULL;
 	int i, dsh_errno = 0, interactive = isatty(STDIN_FILENO);
 	size_t wc = 0, pathc = 0, cmdc = 0;
-
+	bool returnerr = false;
 	(void) ac;
 
 	do {
@@ -39,7 +39,7 @@ int main(int ac, char **av, char **envp)
 		strbrk(buf, &args, ' ', &wc);
 		strbrk(getenv("PATH"), &paths, ':', &pathc);
 
-		countcmd(args, paths, &cmdc);
+		countcmd(args, paths, &cmdc, &returnerr);
 
 		execfork(envp, args, av[0], cmdc, paths);
 
@@ -47,7 +47,7 @@ int main(int ac, char **av, char **envp)
 
 	} while (interactive);
 
-	if (errno != 25 && errno != 0)
+	if (returnerr && errno != 25 && errno != 0)
 		dsh_errno = errno;
 	return (dsh_errno); /* may have unintended consequences */
 }
