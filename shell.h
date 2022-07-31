@@ -28,4 +28,8 @@ int _strcmp(char *s1, char *s2);
 void dsh_exit(char *buf);
 /* Macros  */
 #define _strlen_(str, len) for (len = 0; str[len] != '\0'; len++)
+#define nullify(arg) do {			\
+		free(arg);			\
+		arg = NULL;			\
+	} while (0)
 #endif /* SHELL */

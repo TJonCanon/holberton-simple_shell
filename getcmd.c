@@ -1,8 +1,5 @@
 #include "shell.h"
-#define nullify(arg) do { \
-		free(arg); \
-		arg = NULL; \
-	} while (0)
+
 /**
  * countcmd - gets count of valid input commands
  * @args: arguments
@@ -23,7 +20,6 @@ void countcmd(char **args, char **paths, size_t *cmdc)
 		if (_strcmp("exit", args[j]) == 0)
 		{
 			nullify(args[j]);
-			free(args[++j]);
 			continue;
 		}
 		if (access(args[j], F_OK) != 0)

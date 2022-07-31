@@ -42,8 +42,5 @@ void dsh_read_line(char **buf)
 		}
 	}
 	if (c == -1 && isatty(STDIN_FILENO))
-	{
-		free(*buf);
-		*buf = NULL;
-	}
+		nullify(*buf);
 }
