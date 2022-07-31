@@ -14,10 +14,7 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 {
 	pid_t cpid;
 	int status;
-	char *filepath = NULL, *temp = NULL;
-
-	(void) filepath;
-	(void) temp;
+	char *filepath = NULL;
 
 	if (!args)
 		return;
@@ -46,7 +43,7 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 		if (execve(filepath, args, envp) == -1)
 		{
 			_printf("%s: %d: %s", args[0], errno, filepath);
-			perror(NULL);
+			perror(args[0]);
 		}
 		_exit(0);
 	}

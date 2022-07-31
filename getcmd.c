@@ -1,4 +1,8 @@
 #include "shell.h"
+#define nullify(arg) do { \
+		free(arg); \
+		arg = NULL; \
+	} while (0)
 /**
  * countcmd - gets count of valid input commands
  * @args: arguments
@@ -16,6 +20,12 @@ void countcmd(char **args, char **paths, size_t *cmdc)
 		return;
 	for (j = 0; args[j]; j++)
 	{
+		if (_strcmp("exit", args[j]) == 0)
+		{
+			nullify(args[j]);
+			free(args[++j]);
+			continue;
+		}
 		if (access(args[j], F_OK) != 0)
 		{
 			for (i = 0; paths[i] != NULL; i++)
@@ -25,8 +35,7 @@ void countcmd(char **args, char **paths, size_t *cmdc)
 				name = _strcat(&paths[i], args[j]);
 				if (!access(name, F_OK))
 				{
-					free(name);
-					name = NULL;
+					nullify(name);
 					(*cmdc)++;
 					break;
 				}
@@ -37,10 +46,7 @@ void countcmd(char **args, char **paths, size_t *cmdc)
 				(*cmdc)++;
 	}
 	if (name)
-	{
-		free(name);
-		name = NULL;
-	}
+		nullify(name);
 }
 /**
  * getcmd - checks an input string and returns a valid command, if it exists

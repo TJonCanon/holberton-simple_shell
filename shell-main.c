@@ -12,7 +12,7 @@ int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "($) ", *buf = NULL, **paths = NULL;
 	char **args = NULL;
-	int i, interactive = isatty(STDIN_FILENO);
+	int i, dsh_errno = 0, interactive = isatty(STDIN_FILENO);
 	size_t wc = 0, pathc = 0, cmdc = 0;
 
 	(void) ac;
@@ -47,5 +47,7 @@ int main(int ac, char **av, char **envp)
 
 	} while (interactive);
 
-	return (0);
+	if (errno != 25 && errno != 0)
+		dsh_errno = errno;
+	return (dsh_errno); /* may have unintended consequences */
 }
