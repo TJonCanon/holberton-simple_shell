@@ -6,7 +6,7 @@
  */
 void dsh_exit(char *buf)
 {
-	fflush(NULL);
+	/* fflush(NULL); */
 	free(buf);
 	exit(errno);
 }

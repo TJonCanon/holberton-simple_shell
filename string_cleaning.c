@@ -41,6 +41,8 @@ void squeeze_spaces(char *str_d, unsigned int *slen)
 
 	for (; str_d[i]; i++)
 	{
+		if (str_d[i] == '\n')
+			str_d[i] = ' ';
 	}
 
 	for (i--; i >= 0; i--)
