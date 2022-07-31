@@ -12,7 +12,7 @@ int main(int ac, char **av, char **envp)
 {
 	char *PS1 = "($) ", *buf = NULL, **paths = NULL;
 	char **args = NULL;
-	int interactive = isatty(STDIN_FILENO), i;
+	int i, interactive = isatty(STDIN_FILENO);
 	size_t wc = 0, pathc = 0, cmdc = 0;
 
 	(void) ac;
