@@ -8,7 +8,5 @@ void dsh_exit(char *buf)
 {
 	fflush(NULL);
 	free(buf);
-	if (errno == 25)
-		errno = 0;
-	exit(errno);
+	exit(0);
 }
