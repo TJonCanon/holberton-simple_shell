@@ -35,7 +35,7 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 
 	if (access(filepath, X_OK) != 0 || access(filepath, F_OK) != 0)
 	{
-		_printf("%s: 1: %s: not found\n", name, filepath);
+		perror(name);/* _printf("%s: 1: %s: not found\n", name, filepath); */
 		free(filepath);
 		return;
 	}

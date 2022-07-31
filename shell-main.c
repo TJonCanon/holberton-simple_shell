@@ -24,11 +24,11 @@ int main(int ac, char **av, char **envp)
 
 		if (buf && *buf)
 		{
-			if (_strcmp(buf, "exit") == 4)
+			if (_strcmp("exit", buf) == 0)
 			{
 				dsh_exit(buf);
 			}
-			if (_strcmp(buf, "env") == 0)
+			if (_strcmp("env", buf) == 0)
 			{
 				for (i = 0; envp[i]; i++)
 					_printf("%s\n", envp[i]);
