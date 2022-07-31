@@ -6,6 +6,8 @@
  * @envp: environmental
  * @args: arguments
  * @name: program name
+ * @cmdc: command count from countcmd function
+ * @paths: paths as double pointer element
  */
 
 void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
@@ -51,6 +53,13 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 	wait(&status);
 	free(filepath);
 }
+/**
+ * execmulti - in case of multiple comands being given, this execs them.
+ * @args: user input as double pointer
+ * @paths: every folder from PATH variable
+ * @envp: environment variables
+ * @name: program name as invoked (av[0])
+ */
 
 void execmulti(char **args, char **paths, char **envp, char *name)
 {

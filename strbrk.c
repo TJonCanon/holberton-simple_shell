@@ -9,7 +9,6 @@
  * @args: arguments
  * @delim: delimeter
  * @wc: Word count
- * @name: program name
  * Return - void
  */
 void strbrk(char *buf, char ***args, const char delim, size_t *wc)

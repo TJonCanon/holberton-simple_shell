@@ -42,7 +42,12 @@ void countcmd(char **args, char **paths, size_t *cmdc)
 		name = NULL;
 	}
 }
-
+/**
+ * getcmd - checks an input string and returns a valid command, if it exists
+ * @paths: every folder from PATH variable
+ * @cmd: input string to check as command
+ * Return: pointer to command, whether it exists or not
+ */
 char *getcmd(char **paths, char *cmd)
 {
 	int i;
