@@ -10,10 +10,10 @@
 
 int main(int ac, char **av, char **envp)
 {
-	char *PS1 = "($) ", *buf = NULL, **pathsplit = NULL;
+	char *PS1 = "($) ", *buf = NULL, **paths = NULL;
 	char **args = NULL;
 	int interactive = isatty(STDIN_FILENO), i;
-	size_t wc = 0, pathc = 0;
+	size_t wc = 0, pathc = 0, cmdc = 0;
 
 	(void) ac;
 
@@ -22,7 +22,7 @@ int main(int ac, char **av, char **envp)
 			_printf("%s @ %s %s", getenv("USER"), getenv("PWD"), PS1);
 		dsh_read_line(&buf, av[0]);
 
-		if (buf)
+		if (buf && *buf)
 		{
 			if (_strcmp(buf, "exit") == 0)
 			{
@@ -36,13 +36,14 @@ int main(int ac, char **av, char **envp)
 				continue;
 			}
 		}
-		strbrk(buf, &args, ' ', &wc, av[0]);
+		strbrk(buf, &args, ' ', &wc);
+		strbrk(getenv("PATH"), &paths, ':', &pathc);
 
-		getcmd(args, &pathsplit, &pathc, av[0]);
+		countcmd(args, paths, &cmdc);
 
-		execfork(envp, args, av[0]);
+		execfork(envp, args, av[0], cmdc, paths);
 
-		freestuff(args, &wc, buf, pathsplit, &pathc);
+		freestuff(&args, &wc, buf, &paths, &pathc);
 
 	} while (interactive);
 

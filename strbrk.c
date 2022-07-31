@@ -12,34 +12,34 @@
  * @name: program name
  * Return - void
  */
-void strbrk(char *buf, char ***args, const char delim, size_t *wc, char *name)
+void strbrk(char *buf, char ***args, const char delim, size_t *wc)
 {
 	unsigned int c, i, j = 0, slen = 0;
 	short wordlen = 0;
 
 	countwords(buf, wc, delim, &slen);
+
 	if (delim == ' ')
 		squeeze_spaces(buf, &slen);
+
 	if (!buf || *buf == '\0' || *wc == 0)
 		return;
 
 	*args = malloc((*wc + 1) * sizeof(char *));
 
 	if (!(*args))
-	{
-badmem:		perror(name);
-		free(buf);
-		exit(0);
-	}
+		return;
+
 	for (i = 0; i < slen; i++, wordlen++)
 	{
 		if (!buf[i + 1])
 			wordlen++;
+
 		if (buf[i] == delim || !buf[i + 1])
 		{
 			args[0][j] = malloc(++wordlen * sizeof(char));
 			if (!args[0][j])
-				goto badmem;
+				return;
 			wordlen = 0;
 			doubleincrement(i, j);
 		}

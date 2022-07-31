@@ -1,14 +1,13 @@
 #include "shell.h"
 /**
  * freestuff - frees data structures used by shell
- * @args: arguments
- * @wc: word count
- * @buf: buffer
- * @paths: path 1
- * @pathc: path 2
- * Return - void
+ * @args: user input as double pointer
+ * @wc: num of elements in args
+ * @buf: user input from last run
+ * @ps: path list as double pointer
+ * @pc: path element count
  */
-void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
+void freestuff(char ***args, size_t *wc, char *buf, char ***ps, size_t *pc)
 {
 	unsigned int i;
 
@@ -19,21 +18,21 @@ void freestuff(char **args, size_t *wc, char *buf, char **paths, size_t *pathc)
 	{
 		for (i = 0; i < *wc; i++)
 		{
-			free(args[i]);
-			args[i] = NULL;
+			free(args[0][i]);
+			args[0][i] = NULL;
 		}
-		free(args);
-		args = NULL;
+		free(args[0]);
+		args[0] = NULL;
 	}
-	if (*pathc > 0)
+	if (*pc > 0)
 	{
-		for (i = 0; i < *pathc; i++)
+		for (i = 0; i < *pc; i++)
 		{
-			free(paths[i]);
-			paths[i] = NULL;
+			free(ps[0][i]);
+			ps[0][i] = NULL;
 		}
-		free(paths);
-		paths = NULL;
-		*pathc = 0;
+		free(ps[0]);
+		ps[0] = NULL;
+		*pc = 0;
 	}
 }

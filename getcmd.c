@@ -1,38 +1,72 @@
 #include "shell.h"
-#define _strlen(str, len) for (len = 0; str[len] != '\0'; len++)
 /**
- * getcmd - gathers commands
+ * countcmd - gets count of valid input commands
  * @args: arguments
  * @paths: pointer to store each path element
- * @pathc: number of path elements
- * @name: name of program as invoked
+ * @cmdc: pointer to valid command count
  */
-void getcmd(char **args, char ***paths, size_t *pathc, char *name)
+void countcmd(char **args, char **paths, size_t *cmdc)
 {
-	char *path;
-	int  i = 0, c = 0;
+	int  i, j;
+	char *name = NULL;
+	struct stat sb;
 
-	if (!args)
+	*cmdc = 0;
+	if (!args || !getenv("PATH") || *getenv("PATH") == '\0')
 		return;
-	if (!getenv("PATH") || *getenv("PATH") == '\0')
+	for (j = 0; args[j]; j++)
 	{
-		return;
-	}
-	if (access(args[0], F_OK) != 0)
-	{
-		path = getenv("PATH");
-		strbrk(path, paths, ':', pathc, name);
-		for (i = 0; paths[0][i] != NULL; i++)
+		if (access(args[j], F_OK) != 0)
 		{
-			_strcat(&paths[0][i], args[0]);
-			if (access(paths[0][i], F_OK) == 0)
+			for (i = 0; paths[i] != NULL; i++)
 			{
-				_strlen(paths[0][i], c);
-
-				args[0] = realloc(args[0], ++c);
-
-				_strcpy(&args[0], paths[0][i]);
+				if (name)
+					free(name);
+				name = _strcat(&paths[i], args[j]);
+				if (!access(name, F_OK))
+				{
+					free(name);
+					name = NULL;
+					(*cmdc)++;
+					break;
+				}
 			}
 		}
+		else
+			if (stat(args[j], &sb) == 0 && !S_ISDIR(sb.st_mode))
+				(*cmdc)++;
 	}
+	if (name)
+	{
+		free(name);
+		name = NULL;
+	}
+}
+
+char *getcmd(char **paths, char *cmd)
+{
+	int i;
+	char *newcmd = NULL;
+
+	if (!paths)
+		return (_strcat(&cmd, ""));
+
+	if (access(cmd, F_OK) != 0)
+	{
+		for (i = 0; paths[i] != NULL; i++)
+		{
+			if (newcmd)
+				free(newcmd);
+			newcmd = _strcat(&paths[i], cmd);
+			if (!access(newcmd, F_OK))
+				break;
+		}
+	}
+	if (access(newcmd, F_OK))
+	{
+		free(newcmd);
+		return (_strcat(&cmd, ""));
+	}
+
+	return (newcmd);
 }

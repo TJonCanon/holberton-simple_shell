@@ -63,24 +63,30 @@ void squeeze_spaces(char *str_d, unsigned int *slen)
  * Return: pointer to destination string
  */
 
-void _strcat(char **dest, char *src)
+char *_strcat(char **dest, char *src)
 {
-	int dn, sn;
+	char *new;
+	int dn = 0, sn;
 
-	for (dn = 0 ; dest[0][dn] != '\0' ; dn++)
-	{
-	}
-	for (sn = 0 ; src[sn] != '\0' ; sn++)
-	{
-	}
-	dest[0] = realloc(dest[0], (dn + ++sn) + 1);
+	if (dest[0])
+		_strlen_(dest[0], dn);
+	_strlen_(src, sn);
 
-	dest[0][dn++] = '/';
+	new = malloc(((dn + ++sn) + 1) * sizeof(char));
+
+	if (dest[0])
+	{
+		for (dn = 0; dest[0][dn]; dn++)
+			new[dn] = dest[0][dn];
+		if (sn > 2)
+			new[dn++] = '/';
+	}
 	for (sn = 0 ; src[sn] != '\0' ; sn++, dn++)
-	{
-		dest[0][dn] = src[sn];
-	}
-	dest[0][dn] = '\0';
+		new[dn] = src[sn];
+
+	new[dn] = '\0';
+
+	return (new);
 }
 
 /**
