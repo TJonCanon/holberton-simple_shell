@@ -7,7 +7,7 @@
  * @cmdc: pointer to valid command count
  * @err: boolean to represent if exit has been invoked
  */
-void countcmd(char **args, char **paths, size_t *cmdc, bool *err)
+void countcmd(char **args, char **paths, size_t *cmdc, int *returnerr)
 {
 	int  i, j;
 	char *name = NULL;
@@ -20,7 +20,7 @@ void countcmd(char **args, char **paths, size_t *cmdc, bool *err)
 	{
 		if (_strcmp("exit", args[j]) == 0)
 		{
-			*err = true;
+			*returnerr = 1;
 			nullify(args[j]);
 			continue;
 		}

@@ -10,29 +10,30 @@
  * @paths: paths as double pointer element
  */
 
-void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
+void execfork(char **ep, char **as, char *name, size_t cc, char **ps, int *eno)
 {
 	pid_t cpid;
 	int status;
 	char *filepath = NULL;
 	char *err = NULL;
 
-	if (!args)
+	if (!as)
 		return;
 
-	if (cmdc > 1)
+	if (cc > 1)
 	{
-		execmulti(args, paths, envp, name);
+		execmulti(as, ps, ep, name, eno);
 		return;
 	}
 
-	if (access(args[0], F_OK))
-		filepath = getcmd(paths, args[0]);
+	if (access(as[0], F_OK))
+		filepath = getcmd(ps, as[0]);
 	else
-		filepath = _strcat(&args[0], "");
+		filepath = _strcat(&as[0], "");
 
 	if (access(filepath, X_OK) != 0 || access(filepath, F_OK) != 0)
 	{
+		*eno = 127;
 		err = errcat(name, filepath);
 		write(2, err, _strlen(err));
 		FREETWO(err, filepath);
@@ -42,10 +43,10 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 
 	if (cpid == 0)
 	{
-		if (execve(filepath, args, envp) == -1)
+		if (execve(filepath, as, ep) == -1)
 		{
-			_printf("%s: %d: %s", args[0], errno, filepath);
-			perror(args[0]);
+			_printf("%s: %d: %s", as[0], errno, filepath);
+			perror(as[0]);
 		}
 		_exit(0);
 	}
@@ -60,7 +61,7 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
  * @name: program name as invoked (av[0])
  */
 
-void execmulti(char **args, char **paths, char **envp, char *name)
+void execmulti(char **args, char **paths, char **envp, char *name, int *eno)
 {
 	char *filepath = NULL, *namein[2] = {NULL, NULL}, *err = NULL;
 	int i, status;
@@ -76,6 +77,7 @@ void execmulti(char **args, char **paths, char **envp, char *name)
 
 		if (access(filepath, X_OK) != 0 || access(filepath, F_OK) != 0)
 		{
+			*eno = 127;
 			err = errcat(name, filepath);
 			write(2, err, _strlen(err));
 			FREETWO(err, filepath);

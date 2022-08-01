@@ -15,13 +15,13 @@
 void dsh_read_line(char **buf);
 void freestuff(char ***args, size_t *wc, char *buf, char ***ps, size_t *pc);
 void strbrk(char *buf, char ***args, const char delim, size_t *wc);
-void countcmd(char **args, char **paths, size_t *pathc, bool *err);
-void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths);
+void countcmd(char **args, char **paths, size_t *pathc, int *returnerr);
+void execfork(char **ep, char **as, char *name, size_t cc, char **ps, int *e);
 char *errcat(char *pname, char *cname);
 /* Subroutines */
 void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen);
 void squeeze_spaces(char *str_d, unsigned int *slen);
-void execmulti(char **args, char **paths, char **envp, char *name);
+void execmulti(char **args, char **paths, char **envp, char *name, int *eno);
 char *getcmd(char **paths, char *cmd);
 char *_strcat(char **dest, char *src);
 void _strcpy(char **dest, char *src);

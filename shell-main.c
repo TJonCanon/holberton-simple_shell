@@ -13,7 +13,7 @@ int main(int ac, char **av, char **envp)
 	char *PS1 = "($) ", **args = NULL, *buf = NULL, **paths = NULL;
 	int i, dsh_errno = 0, interactive = isatty(STDIN_FILENO);
 	size_t wc = 0, pathc = 0, cmdc = 0;
-	bool returnerr = false;
+	int returnerr = 0;
 	(void) ac;
 
 	do {
@@ -40,13 +40,13 @@ int main(int ac, char **av, char **envp)
 
 		countcmd(args, paths, &cmdc, &returnerr);
 
-		execfork(envp, args, av[0], cmdc, paths);
+		execfork(envp, args, av[0], cmdc, paths, &dsh_errno);
 
 		freestuff(&args, &wc, buf, &paths, &pathc);
 
 	} while (interactive);
 
-	if (returnerr && errno != 25 && errno != 0)
+	if (((returnerr) && errno == 2) || errno == 127)
 		dsh_errno = errno;
 	return (dsh_errno); /* may have unintended consequences */
 }
