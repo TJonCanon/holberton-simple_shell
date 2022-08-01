@@ -43,4 +43,5 @@ void dsh_read_line(char **buf)
 	}
 	if (c == -1 && isatty(STDIN_FILENO))
 		nullify(*buf);
+
 }

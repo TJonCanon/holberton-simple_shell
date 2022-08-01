@@ -44,7 +44,7 @@ int main(int ac, char **av, char **envp)
 
 		freestuff(&args, &wc, buf, &paths, &pathc);
 
-	} while (interactive);
+	} while (interactive && buf);
 
 	if (((returnerr) && errno == 2) || errno == 127)
 		dsh_errno = errno;

@@ -12,17 +12,19 @@ void freestuff(char ***args, size_t *wc, char *buf, char ***ps, size_t *pc)
 	unsigned int i;
 
 	if (buf)
+	{
 		free(buf);
 
-	if (*wc > 0)
-	{
-		for (i = 0; i < *wc; i++)
+		if (*wc > 0)
 		{
-			free(args[0][i]);
-			args[0][i] = NULL;
+			for (i = 0; i < *wc; i++)
+			{
+				free(args[0][i]);
+				args[0][i] = NULL;
+			}
+			free(args[0]);
+			args[0] = NULL;
 		}
-		free(args[0]);
-		args[0] = NULL;
 	}
 	if (*pc > 0)
 	{
