@@ -11,11 +11,9 @@ void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 {
 	int i = 0;
 
-	*wc = 0;
-
 	if (!buf)
 		return;
-
+	*wc = 0;
 	if (*buf != '\0')
 	{
 		for (; buf[++i] != '\0';)
