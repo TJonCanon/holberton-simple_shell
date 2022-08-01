@@ -6,7 +6,6 @@
  * Return: pointer to desired function
  */
 
-
 int (*get_spec(char s))(va_list, char *)
 {
 	spec specs[] = {

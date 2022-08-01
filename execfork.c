@@ -96,6 +96,13 @@ void execmulti(char **args, char **paths, char **envp, char *name)
 	}
 }
 
+/**
+ * errcat - writes sh-style error messages
+ * @pname: argv[0] as invoked
+ * @cname: user-provided input command
+ * Return: sh-style error string
+ */
+
 char *errcat(char *pname, char *cname)
 {
 	int i, j;
