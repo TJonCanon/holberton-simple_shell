@@ -12,7 +12,7 @@ void countwords(char *buf, size_t *wc, const char dl, unsigned int *slen)
 	int i = 0;
 
 	if (!buf)
-		exit(0);
+		return;
 	*wc = 0;
 	if (*buf != '\0')
 	{

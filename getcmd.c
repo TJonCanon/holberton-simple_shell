@@ -14,7 +14,7 @@ void countcmd(char **args, char **paths, size_t *cmdc, int *returnerr)
 	struct stat sb;
 
 	*cmdc = 0;
-	if (!args || !getenv("PATH") || *getenv("PATH") == '\0')
+	if (!args) /*|| !getenv("PATH") || *getenv("PATH") == '\0') */
 		return;
 	for (j = 0; args[j]; j++)
 	{
@@ -26,7 +26,7 @@ void countcmd(char **args, char **paths, size_t *cmdc, int *returnerr)
 		}
 		if (access(args[j], F_OK) != 0)
 		{
-			for (i = 0; paths[i] != NULL; i++)
+			for (i = 0; paths && paths[i] != NULL; i++)
 			{
 				if (name)
 					free(name);
