@@ -15,6 +15,7 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 	pid_t cpid;
 	int status;
 	char *filepath = NULL;
+	char *err = NULL;
 
 	if (!args)
 		return;
@@ -32,8 +33,9 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 
 	if (access(filepath, X_OK) != 0 || access(filepath, F_OK) != 0)
 	{
-		perror(name);/* _printf("%s: 1: %s: not found\n", name, filepath); */
-		free(filepath);
+		err = errcat(name, filepath);
+		write(2, err, _strlen(err));
+		FREETWO(err, filepath);
 		return;
 	}
 	cpid = fork();
@@ -60,7 +62,7 @@ void execfork(char **envp, char **args, char *name, size_t cmdc, char **paths)
 
 void execmulti(char **args, char **paths, char **envp, char *name)
 {
-	char *filepath = NULL, *namein[2] = {NULL, NULL};
+	char *filepath = NULL, *namein[2] = {NULL, NULL}, *err = NULL;
 	int i, status;
 	pid_t cpid;
 
@@ -74,8 +76,9 @@ void execmulti(char **args, char **paths, char **envp, char *name)
 
 		if (access(filepath, X_OK) != 0 || access(filepath, F_OK) != 0)
 		{
-			_printf("%s: 1: %s: not found\n", name, filepath);
-			free(filepath);
+			err = errcat(name, filepath);
+			write(2, err, _strlen(err));
+			FREETWO(err, filepath);
 			continue;
 		}
 		cpid = fork();
@@ -91,4 +94,24 @@ void execmulti(char **args, char **paths, char **envp, char *name)
 		wait(&status);
 		free(filepath);
 	}
+}
+
+char *errcat(char *pname, char *cname)
+{
+	int i, j;
+	char *erract = malloc(256 * sizeof(char));
+	char *errsuff = ": not found\n";
+	char *errmid = ": 1: ";
+
+	for (i = 0; pname[i]; i++)
+		erract[i] = pname[i];
+	for (j = 0; errmid[j]; j++)
+		erract[i++] = errmid[j];
+	for (j = 0; cname[j]; j++)
+		erract[i++] = cname[j];
+	for (j = 0; errsuff[j]; j++)
+		erract[i++] = errsuff[j];
+	erract[i] = '\0';
+
+	return (erract);
 }

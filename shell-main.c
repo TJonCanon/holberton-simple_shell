@@ -10,8 +10,7 @@
 
 int main(int ac, char **av, char **envp)
 {
-	char *PS1 = "($) ", *buf = NULL, **paths = NULL;
-	char **args = NULL;
+	char *PS1 = "($) ", **args = NULL, *buf = NULL, **paths = NULL;
 	int i, dsh_errno = 0, interactive = isatty(STDIN_FILENO);
 	size_t wc = 0, pathc = 0, cmdc = 0;
 	bool returnerr = false;
