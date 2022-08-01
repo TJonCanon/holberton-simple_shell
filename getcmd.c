@@ -5,7 +5,7 @@
  * @args: arguments
  * @paths: pointer to store each path element
  * @cmdc: pointer to valid command count
- * @err: boolean to represent if exit has been invoked
+ * @returnerr: boolean to represent if exit has been invoked
  */
 void countcmd(char **args, char **paths, size_t *cmdc, int *returnerr)
 {

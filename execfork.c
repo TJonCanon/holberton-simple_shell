@@ -3,11 +3,12 @@
 
 /**
  * execfork - executes a fork
- * @envp: environmental
- * @args: arguments
+ * @ep: environmental
+ * @as: arguments
  * @name: program name
- * @cmdc: command count from countcmd function
- * @paths: paths as double pointer element
+ * @cc: command count from countcmd function
+ * @ps: paths as double pointer element
+ * @eno: error number
  */
 
 void execfork(char **ep, char **as, char *name, size_t cc, char **ps, int *eno)
@@ -59,6 +60,7 @@ void execfork(char **ep, char **as, char *name, size_t cc, char **ps, int *eno)
  * @paths: every folder from PATH variable
  * @envp: environment variables
  * @name: program name as invoked (av[0])
+ * @eno: error number
  */
 
 void execmulti(char **args, char **paths, char **envp, char *name, int *eno)
