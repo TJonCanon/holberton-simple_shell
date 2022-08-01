@@ -8,20 +8,19 @@
  * Return: 0
  */
 
-int main(int ac, char **av, char **envp)
+int main(__attribute__ ((unused)) int ac, char **av, char **envp)
 {
 	char *PS1 = "($) ", **args = NULL, *buf = NULL, **paths = NULL;
 	int i, dsh_errno = 0, interactive = isatty(STDIN_FILENO);
 	size_t wc = 0, pathc = 0, cmdc = 0;
 	int returnerr = 0;
-	(void) ac;
 
 	do {
 		if (interactive)
 			_printf("%s @ %s %s", getenv("USER"), getenv("PWD"), PS1);
-		dsh_read_line(&buf);
+		dsh_read_line(&buf); /* Read user input, if EOF buf is NULL */
 
-		if (buf && *buf)
+		if (buf && *buf) /* Not EOF or newline */
 		{
 			if (_strcmp("exit", buf) == 0)
 			{
@@ -35,18 +34,18 @@ int main(int ac, char **av, char **envp)
 				continue;
 			}
 		}
-		strbrk(buf, &args, ' ', &wc);
-		strbrk(getenv("PATH"), &paths, ':', &pathc);
-
+		strbrk(buf, &args, ' ', &wc); /* split buf into a sentence */
+		strbrk(getenv("PATH"), &paths, ':', &pathc); /*Split paths into a sentence*/
+/* Count number of commands */
 		countcmd(args, paths, &cmdc, &returnerr);
-
+/* Handles execution and translation */
 		execfork(envp, args, av[0], cmdc, paths, &dsh_errno);
-
+/* Free all objects */
 		freestuff(&args, &wc, buf, &paths, &pathc);
 
-	} while (interactive && buf);
+	} while (interactive && buf); /* terminate if noninteractive or EOF */
 
 	if (((returnerr) && errno == 2) || errno == 127)
 		dsh_errno = errno;
-	return (dsh_errno); /* may have unintended consequences */
+	return (dsh_errno); /* Return errors 127 or 2 (Needs work) */
 }

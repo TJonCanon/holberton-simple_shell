@@ -14,10 +14,12 @@ void countcmd(char **args, char **paths, size_t *cmdc, int *returnerr)
 	struct stat sb;
 
 	*cmdc = 0;
-	if (!args) /*|| !getenv("PATH") || *getenv("PATH") == '\0') */
+	if (!args)
 		return;
 	for (j = 0; args[j]; j++)
 	{
+		if (args[j][0] == '.' || args[j][1] == '/')
+			continue;
 		if (_strcmp("exit", args[j]) == 0)
 		{
 			*returnerr = 1;
