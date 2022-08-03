@@ -15,7 +15,7 @@
 void dsh_read_line(char **buf);
 void freestuff(char ***args, size_t *wc, char *buf, char ***ps, size_t *pc);
 void strbrk(char *buf, char ***args, const char delim, size_t *wc);
-void countcmd(char **args, char **paths, size_t *pathc, int *returnerr);
+void countcmd(char **args, char **paths, size_t *pathc, int *rerr, char **buf);
 void execfork(char **ep, char **as, char *name, size_t cc, char **ps, int *e);
 char *errcat(char *pname, char *cname);
 /* Subroutines */
@@ -26,7 +26,7 @@ char *getcmd(char **paths, char *cmd);
 char *_strcat(char **dest, char *src);
 void _strcpy(char **dest, char *src);
 int _strcmp(char *s1, char *s2);
-void dsh_exit(char *buf);
+void dsh_exit(char *buf, char ***paths, size_t *pathc);
 /* Macros  */
 #define _strlen_(str, len) for (len = 0; str[len] != '\0'; len++)
 #define nullify(arg) do {			\

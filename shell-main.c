@@ -15,16 +15,18 @@ int main(__attribute__ ((unused)) int ac, char **av, char **envp)
 	size_t wc = 0, pathc = 0, cmdc = 0;
 	int returnerr = 0;
 
+	strbrk(getenv("PATH"), &paths, ':', &pathc); /* Split paths into a sentence*/
+
 	do {
 		if (interactive)
 			_printf("%s @ %s %s", getenv("USER"), getenv("PWD"), PS1);
-		dsh_read_line(&buf); /* Read user input, if EOF buf is NULL */
+		dsh_read_line(&buf); /* Read user input, buf is NULL on EOF */
 
 		if (buf && *buf) /* Not EOF or newline */
 		{
 			if (_strcmp("exit", buf) == 0)
 			{
-				dsh_exit(buf);
+				dsh_exit(buf, &paths, &pathc);
 			}
 			if (_strcmp("env", buf) == 0)
 			{
@@ -34,10 +36,9 @@ int main(__attribute__ ((unused)) int ac, char **av, char **envp)
 				continue;
 			}
 		}
-		strbrk(buf, &args, ' ', &wc); /* split buf into a sentence */
-		strbrk(getenv("PATH"), &paths, ':', &pathc); /*Split paths into a sentence*/
+		strbrk(buf, &args, ' ', &wc); /* Split buf into a sentence */
 /* Count number of commands */
-		countcmd(args, paths, &cmdc, &returnerr);
+		countcmd(args, paths, &cmdc, &returnerr, &buf);
 /* Handles execution and translation */
 		execfork(envp, args, av[0], cmdc, paths, &dsh_errno);
 /* Free all objects */
